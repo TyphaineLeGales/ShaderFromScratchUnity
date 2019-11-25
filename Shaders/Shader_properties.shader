@@ -34,7 +34,7 @@
         void surf (Input IN, inout SurfaceOutput o)
         {
             o.Albedo = (tex2D(_Tex, IN.uv_Tex)*_Range).rgb;
-            o.Emission = texCUBE (_Cube, IN.worldRefl).rgb;
+            o.Emission = (texCUBE (_Cube, IN.worldRefl)*_Color).rgb;
         }
         ENDCG
     }

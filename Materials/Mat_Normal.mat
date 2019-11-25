@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Properties
-  m_Shader: {fileID: 4800000, guid: 0a106aee28f2a4c54ba401a7dc35be78, type: 3}
+  m_Name: Mat_Normal
+  m_Shader: {fileID: 4800000, guid: a335633cc95d94a4aad2b813f1448c9f, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -21,10 +21,6 @@ Material:
     m_TexEnvs:
     - _BumpMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Cube:
-        m_Texture: {fileID: 8900000, guid: 7eac14e13215549d2a61005899a6b7e9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -44,12 +40,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 53cbfecc92d0d4529b804c096c46bce1, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: d6538b8c4c18b447ca1f61c02eea6929, type: 3}
+        m_Scale: {x: 1.88, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: ed24b025e845145849e217b47a45f918, type: 3}
+        m_Scale: {x: 1.88, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
@@ -59,16 +59,11 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Tex:
-        m_Texture: {fileID: 2800000, guid: 62bf55ab3813940e9aa3bf74dcd095bd, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 1, y: 1}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Float: 0.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -76,13 +71,11 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Range: 0.68
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.41509432, g: 0.31940982, b: 0.009789959, a: 1}
+    - _Color: {r: 0, g: 1, b: 0.0123586655, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Vector: {r: 0.5, g: 1, b: 1, a: 1}
