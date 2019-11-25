@@ -5,6 +5,7 @@
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Diffuse Map", 2D) = "white" {}
         _NormalTex ("Normal Map", 2D) = "white" {}
+        _Slider ("Bump Strength", Range(0,10)) = 1
        
     }
     SubShader
@@ -17,6 +18,7 @@
         sampler2D _MainTex;
         sampler2D _NormalTex;
         fixed4 _Color;
+        half _Slider;
 
         struct Input
         {
@@ -30,6 +32,7 @@
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
             o.Albedo = c.rgb;
             o.Normal = UnpackNormal(tex2D(_NormalTex, IN.uv_NormalTex));
+            o.Normal *= float3(_Slider, _Slider, 1);
         }
         ENDCG
     }
