@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_BumpedRefl
+  m_Name: Mat_FlatShadedRefl
   m_Shader: {fileID: 4800000, guid: 586a851adf30e4b34b2c03dbdf8df630, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
