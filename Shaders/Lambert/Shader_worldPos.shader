@@ -14,6 +14,7 @@
         struct Input
         {
             float3 worldPos;
+            float3 viewDir;
         };
 
         fixed4 _Color1;
@@ -21,8 +22,8 @@
 
         void surf (Input IN, inout SurfaceOutput o)
         {
-            o.Albedo = float3(0,0,0);
-            o.Emission = IN.worldPos.y > -0.5? _Color1 : _Color2;
+             half rim = 1-saturate(dot(normalize(IN.viewDir), normalize(o.Normal)));
+            o.Emission = IN.worldPos.y > -0.3? _Color1*rim : _Color2*rim;
         }
         ENDCG
     }
