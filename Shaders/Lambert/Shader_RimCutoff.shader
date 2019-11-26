@@ -2,8 +2,9 @@
 {
     Properties
     {
-        _RimColor ("RimColor", Color) = (0,0.5,0.5,0)
-        _RimPower("RimPower", Range(0.5, 8)) = 3
+        _RingColor1 ("RingColor1", Color) = (1,0,0,0)
+        _RingColor2 ("RingColor2", Color) = (1,1,0,0)
+        _BaseColor ("BaseColor", Color) = (0,0,1,0)
 
     }
     SubShader
@@ -20,13 +21,14 @@
 
         };
 
-        fixed4 _RimColor;
-        float _RimPower;
+        fixed4 _RingColor1;
+        fixed4 _RingColor2;
+        fixed4 _BaseColor;
 
         void surf (Input IN, inout SurfaceOutput o)
         {
             half rim = 1- saturate(dot(normalize(IN.viewDir), normalize(o.Normal)));
-            o.Emission = _RimColor.rgb* pow(rim, _RimPower);
+            o.Emission = rim > 0.5 ?  _RingColor1: rim>0.3 ?  _RingColor2 :  _BaseColor;
         }
         ENDCG
     }

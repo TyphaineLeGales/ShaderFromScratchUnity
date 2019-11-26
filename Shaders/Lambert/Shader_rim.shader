@@ -2,8 +2,8 @@
 {
     Properties
     {
-        _Color ("Color", Color) = (1,1,1,1)
-        _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _RimColor ("RimColor", Color) = (0,0.5,0.5,0)
+        _RimPower("RimPower", Range(0.5, 8)) = 3
 
     }
     SubShader
@@ -14,21 +14,19 @@
         CGPROGRAM
         #pragma surface surf Lambert
 
-
-        sampler2D _MainTex;
-
         struct Input
         {
-            float2 uv_MainTex;
+            float3 viewDir;
+
         };
 
-        fixed4 _Color;
+        fixed4 _RimColor;
+        float _RimPower;
 
         void surf (Input IN, inout SurfaceOutput o)
         {
-            // Albedo comes from a texture tinted by color
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            o.Albedo = c.rgb;
+            half rim = 1- saturate(dot(normalize(IN.viewDir), normalize(o.Normal)));
+            o.Emission = _RimColor.rgb* pow(rim, _RimPower);
         }
         ENDCG
     }
