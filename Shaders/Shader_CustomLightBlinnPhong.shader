@@ -14,7 +14,7 @@
 
         //atten = attenuation, for light it corresponds to its intensity or the loss of it there is when travelling through air/water etc ...
         half4 LightingCustomBasicBlinn (SurfaceOutput s, half3 lightDir, half viewDir, half atten) {
-            //calculate specular
+            //calculate specular using max to clamp the value so that when the light = -1 and is at the back of the surface it doesn't affect the calculation
             half3 halfway = normalize(lightDir + viewDir);
             half diff = max(0, dot(s.Normal, lightDir));
             float nh = max(0, dot(s.Normal, halfway));
