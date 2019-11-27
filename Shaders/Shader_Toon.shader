@@ -18,7 +18,7 @@
         float4 LightingCustomToon (SurfaceOutput s, fixed3 lightDir, fixed atten) {
 
             float diff = dot(lightDir, s.Normal);
-            // h is used as uv value fir the ramp tex
+            // h is used as uv value for the ramp tex (sampling will happen following the diagonal)
             float h = diff * 0.5 + 0.5;
             float2 rh = h;
             float3 ramp = tex2D(_RampTex, rh).rgb;
