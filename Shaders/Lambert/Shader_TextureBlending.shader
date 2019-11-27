@@ -5,6 +5,7 @@
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _DecalTex ("Albedo (RGB)", 2D) = "white" {}
+        [Toggle] _ToggleTexture("invert texture", Float) = 0
 
     }
     SubShader
@@ -17,6 +18,7 @@
 
         sampler2D _MainTex;
         sampler2D _DecalTex;
+        float _ShowDecal;
 
         struct Input
         {
