@@ -7,9 +7,10 @@
     }
     SubShader
     {
-         Tags { 
-             "Queue"="Transparent" 
-            }
+        Tags { 
+            "Queue"="Transparent" 
+        }
+        Cull Off
 
         CGPROGRAM
         #pragma surface surf Lambert alpha:fade
