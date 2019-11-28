@@ -48,10 +48,11 @@
         void vert(inout appdata v, out Input o) {
               UNITY_INITIALIZE_OUTPUT(Input,o);
             float t = _Time * _WaveSpeed; 
-            float waveHeight = sin(t + v.vertex.z * _Frequency) * _Amplitude +
+             float offsetVert = v.vertex.z*v.vertex.x; //direction of propagation of the waves
+            float waveHeight = sin(t + offsetVert * _Frequency) * _Amplitude +
                         sin(t*2 + v.vertex.z * _Frequency*2) * _Amplitude;
             v.vertex.y = v.vertex.y + waveHeight;
-            v.normal = normalize(float3(v.normal.x , v.normal.y+ waveHeight, v.normal.z));
+            v.normal = normalize(float3(v.normal.x , v.normal.y, v.normal.z+ waveHeight));
             o.vertColor = waveHeight + 2;
 
 
