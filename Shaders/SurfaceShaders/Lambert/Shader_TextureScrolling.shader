@@ -2,12 +2,17 @@
 {
     Properties
     {
-        _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _MainTex ("Base Tex", 2D) = "white" {}
+        _FoamTex ("Foam Tex", 2D) = "white" {}
         _ScrollX ("ScrollX", Range(-5, 5)) =1
         _ScrollY ("ScrollY", Range(-5, 5)) =1
         _Frequency ("Frequency", Range(0,5)) = 0.4
-        _Amplitude ("Amplitude", Range(0,1)) = 0.228
-        _Speed ("Speed", Range(0,100)) = 52.5
+        _Amplitude ("Amplitude", Range(0,1)) = 0.325
+        _WaveSpeed ("Wave Speed", Range(0,100)) = 18.8
+        _MainTexSpeed("Water Speed", Range(-10,10)) = 0.43
+        _FoamTexSpeed("Foam Speed", Range(-10,10)) = 1.73
+
+
 
     }
     SubShader
@@ -17,10 +22,13 @@
         #pragma surface surf Lambert vertex:vert
 
         sampler2D _MainTex;
+        sampler2D _FoamTex;
         float _ScrollX;
         float _ScrollY;
         float _Frequency;
-        float _Speed;
+        float _WaveSpeed;
+        float _MainTexSpeed;
+        float _FoamTexSpeed;
         float _Amplitude;
 
         struct Input
@@ -39,7 +47,7 @@
 
         void vert(inout appdata v, out Input o) {
               UNITY_INITIALIZE_OUTPUT(Input,o);
-            float t = _Time * _Speed; 
+            float t = _Time * _WaveSpeed; 
             float waveHeight = sin(t + v.vertex.z * _Frequency) * _Amplitude +
                         sin(t*2 + v.vertex.z * _Frequency*2) * _Amplitude;
             v.vertex.y = v.vertex.y + waveHeight;
@@ -54,9 +62,10 @@
             // Albedo comes from a texture tinted by color
             _ScrollX *= _Time;
 
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex + float2(_ScrollX, _ScrollY));
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex + float2(_ScrollX*_MainTexSpeed, _ScrollY*_MainTexSpeed));
+            fixed4 foam = tex2D (_FoamTex, IN.uv_MainTex + float2(_ScrollX*_FoamTexSpeed, _ScrollY*_FoamTexSpeed));
             //float2 uvOffset = 
-            o.Albedo = c.rgb*IN.vertColor;
+            o.Albedo = c.rgb*IN.vertColor*foam.rgb;
 
         }
         ENDCG
