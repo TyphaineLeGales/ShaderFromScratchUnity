@@ -38,7 +38,7 @@
         void vert (inout appdata v, out Input o) {
             UNITY_INITIALIZE_OUTPUT(Input,o);
             float t = _Time * _Speed;
-            float offsetVert = (v.vertex.x*v.vertex.x) + (v.vertex.z*v.vertex.z);
+            float offsetVert = (v.vertex.x*v.vertex.x) + (v.vertex.z*v.vertex.z); //direction of propagation of the waves
             float waveHeight = sin(t + offsetVert * _Frequency) * _Amplitude;
             v.vertex.y = v.vertex.y + waveHeight;
             //update normals after having modified the vertices
