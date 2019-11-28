@@ -29,6 +29,7 @@
         };
 
         void vert (inout appdata v) {
+            _Amount += _SinTime%1;
             v.vertex.xyz += v.normal.x*_Amount;
         }
 
