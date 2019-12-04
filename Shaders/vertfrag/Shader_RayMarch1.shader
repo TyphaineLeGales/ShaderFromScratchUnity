@@ -2,7 +2,8 @@
 {
       Properties 
     {
-        _primitivePos ("containerPos", Vector) = (1,0,0,0)
+        _primitivePos("containerPos", Vector) = (0,0,0)
+        _col("color", Color) = (1,1,1,1)
     }
 
     SubShader
@@ -16,7 +17,9 @@
             #pragma vertex vert
             #pragma fragment frag
 
-            float4 _primitivePos;
+            float3 _primitivePos;
+            fixed4 _col;
+            
 
             #include "UnityCG.cginc"
 
@@ -53,7 +56,7 @@
             {
                 for (int i =0; i < STEPS; i++) 
                 {
-                    if( SphereHit(position, float3(_primitivePos.xyz), 0.5))
+                    if( SphereHit(position, float3(_primitivePos), 0.5))
                         return position;
 
                     position += direction * STEP_SIZE;
@@ -69,7 +72,7 @@
                 float depth = RaymarchHit(worldPosition, viewDirection);
 
                 if(depth != 0)
-                    return fixed4(1, 0, 0, 1);
+                    return fixed4(_col);
                 else 
                     return fixed4(1, 1, 1, 0);
             }

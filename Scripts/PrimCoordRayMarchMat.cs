@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[ExecuteInEditMode]
 public class PrimCoordRayMarchMat : MonoBehaviour
 {
-    // Start is called before the first frame update
      Vector3 _primPos;
 
     void Start()
@@ -16,8 +17,6 @@ public class PrimCoordRayMarchMat : MonoBehaviour
     void Update()
     {
         _primPos = GetComponent<Transform>().position;
-        Debug.Log(this.GetComponent<Renderer>().sharedMaterial.GetVector("_primitivePos"));
-        Debug.Log(_primPos);
-        this.GetComponent<Renderer>().sharedMaterial.SetVector(" _primitivePos", _primPos); 
+       this.GetComponent<Renderer>().sharedMaterial.SetVector("_primitivePos", _primPos); 
     }
 }
