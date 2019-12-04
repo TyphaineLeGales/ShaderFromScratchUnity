@@ -1,5 +1,9 @@
 ﻿Shader "Custom/Shader_RayMarch1"
 {
+      Properties 
+    {
+        _primitivePos ("containerPos", Vector) = (1,0,0,0)
+    }
 
     SubShader
     {
@@ -11,6 +15,8 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+
+            float4 _primitivePos;
 
             #include "UnityCG.cginc"
 
@@ -47,7 +53,7 @@
             {
                 for (int i =0; i < STEPS; i++) 
                 {
-                    if( SphereHit(position, float3(0,0,0), 0.5))
+                    if( SphereHit(position, float3(_primitivePos.xyz), 0.5))
                         return position;
 
                     position += direction * STEP_SIZE;
