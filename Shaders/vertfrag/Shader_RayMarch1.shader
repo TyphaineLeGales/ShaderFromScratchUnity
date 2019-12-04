@@ -44,8 +44,8 @@
                 return o;
             }
 
-            #define STEPS 64
-            #define STEP_SIZE 0.01
+            #define STEPS 128
+            #define STEP_SIZE 0.1
 
             bool SphereHit(float3 p, float3 centre, float radius) //p = pixel position
             { 
@@ -72,7 +72,7 @@
                 float depth = RaymarchHit(worldPosition, viewDirection);
 
                 if(depth != 0)
-                    return fixed4(_col);
+                    return fixed4(depth, 1, 0, 1);
                 else 
                     return fixed4(1, 1, 1, 0);
             }
