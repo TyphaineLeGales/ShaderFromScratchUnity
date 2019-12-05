@@ -6,6 +6,8 @@ using UnityEngine;
 public class PrimCoordFog : MonoBehaviour
 {
      Vector3 _primPos;
+     float _primScale;
+     
     void Start()
     {
         
@@ -16,6 +18,8 @@ public class PrimCoordFog : MonoBehaviour
     {
          _primPos = GetComponent<Transform>().position;
         this.GetComponent<Renderer>().sharedMaterial.SetVector("_FogCentre", _primPos); 
+        _primScale = GetComponent<Transform>().localScale.x/2 ;
+         this.GetComponent<Renderer>().sharedMaterial.SetFloat("_FogRadius", _primScale); 
         
     }
 }

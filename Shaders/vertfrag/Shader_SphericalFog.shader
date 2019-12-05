@@ -2,7 +2,8 @@
 {
       Properties
     {
-        _FogCentre("Fog Centre/Radius", Vector) = (0,0,0,0.5)
+        _FogCentre("Fog Centre/", Vector) = (0,0,0)
+        _FogRadius("FogRadius", Range(0.1, 10)) = 1
         _FogColor("Fog Colour", Color) = (1,1,1,1)
         _InnerRatio ("Inner Ratio", Range (0.0, 0.9)) = 0.5
         _Density("Density", Range (0.0, 1.0)) = 0.5
@@ -72,7 +73,8 @@
                 float4 projPos : TEXCOORD1;
             };
 
-            float4 _FogCentre;
+            float3 _FogCentre;
+            float _FogRadius;
             fixed4 _FogColor;
             float _InnerRatio;
             float _Density;
@@ -100,7 +102,7 @@
 
                 float fog = CalculatFogIntensity (
                     _FogCentre.xyz,
-                    _FogCentre.w,
+                    _FogRadius,
                     _InnerRatio,
                     _Density,
                     _WorldSpaceCameraPos,

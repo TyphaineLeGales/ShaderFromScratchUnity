@@ -77,4 +77,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _col: {r: 1, g: 0, b: 0, a: 1}
-    - _primitivePos: {r: 2.868, g: 0, b: -1.75, a: 0}
+    - _primitivePos: {r: -6.1598663, g: -0.51, b: 14.119341, a: 0}
