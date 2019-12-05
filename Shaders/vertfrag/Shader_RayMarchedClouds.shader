@@ -50,6 +50,51 @@
             float4 _sunDir;
             sampler2D _CameraDepthTexture;
 
+            float random(float3 value, float3 dotDir){
+                float3 smallV = sin(value);
+                float random = dot(smallV, dotDir);
+                random = frac(sin(random)* 123574.43212); 
+                return random;
+            }
+
+            float3 random3d(float3 value) // run random 3 times 
+            {
+                return float3 ( random(value, float3(12.898, 68.54, 37.7298)),
+                                random(value, float3(39.496, 26.54, 86.7298)),
+                                random(value, float3(74.898, 12.54, 8.7298)));
+            }
+
+            float noise3d(float3 value)
+            {
+                value *= _Scale;
+                float3 interp = frac(value);
+                interp = smoothstep(0.0, 1.0, interp);
+
+                //generate 8 sets of coordinates : 2x interpolate between them same for 2y and 2z
+                float3 ZValues[2];
+                for(int z = 0; z <= 1; z++)
+                {
+                    float3 YValues[2];
+                    for(int y = 0; y <= 1; y++)
+                    {
+                        float3 XValues[2];
+                        for(int x = 0; x <= 1; x++)
+                        {
+                            float3 cell = floor(value) + float3(x, y, z);
+                            XValues[x] = random3d(cell);
+                        }
+                        YValues[y] = lerp(XValues[0], XValues[1], interp.x);
+                    }
+                    ZValues[z] = lerp(YValues[0], YValues[1], interp.y);
+                }
+                
+                //float noise = lerp(ZValues[0], ZValues[1], interp.z);
+                //push values appart
+                float noise = -1.0 + 2.0 * lerp(ZValues[0], ZValues[1], interp.z);
+
+                return noise;
+            }
+
              //using a hash define => makes it easy to pass through references of anything because you don't need to declare the type of you argument
             #define MARCH(steps, noiseMap, cameraPos, viewDir, bgcol, sum, depth, t) { \
                 for (int i = 0; i < steps  + 1; i++) \
@@ -66,12 +111,14 @@
                     float density = noiseMap(pos); \
                     if (density > 0.01) \
                     { \
-                        float diffuse = clamp((density - noiseMap(pos + 0.3 * _SunDir)) / 0.6, 0.0, 1.0);\
-                        sum = integrate(sum, diffuse, density, bgcol, t); \
+                        float diffuse = clamp((density - noiseMap(pos + 0.3 * _sunDir)) / 0.6, 0.0, 1.0);\
+                        sum = diffuse; \
                     } \
                     t += max(0.1, 0.02 * t); \
                 } \
             } 
+
+            //integrate(sum, diffuse, density, bgcol, t);
 
             #define NOISEPROC(N, P) 1.75 * N * saturate((_MaxHeight - P.y)/_FadeDist) //spread the range of values so that we get quite transparent and quite opaque values
 
