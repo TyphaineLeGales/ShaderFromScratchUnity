@@ -50,7 +50,8 @@
             float4 _sunDir;
             sampler2D _CameraDepthTexture;
 
-            float random(float3 value, float3 dotDir){
+            float random(float3 value, float3 dotDir)
+            {
                 float3 smallV = sin(value);
                 float random = dot(smallV, dotDir);
                 random = frac(sin(random)* 123574.43212); 
@@ -95,6 +96,18 @@
                 return noise;
             }
 
+            fixed4 integrate(fixed4 sum, float diffuse, float density, fixed4 bgcol, float t)
+            {
+                fixed3 lighting = fixed3(0.65, 0.68, 0.7) * 1.3 + 0.5 * fixed3(0.7, 0.5, 0.3) * diffuse;
+                fixed3 colrgb = lerp(fixed3(1.0, 0.95, 0.8), fixed3(0.65, 0.65, 0.65), density);
+                fixed4 col = fixed4(colrgb.r, colrgb.g, colrgb.b, density);
+                col.rgb *= lighting;
+                col.rgb = lerp(col.rgb, bgcol, 1.0 - exp(-0.003*t*t)); //falloff value to mimic natural fog
+                col.a *= 0.5;
+                col.rgb *= col.a;
+                return sum + col*(1.0 - sum.a);
+            }
+
              //using a hash define => makes it easy to pass through references of anything because you don't need to declare the type of you argument
             #define MARCH(steps, noiseMap, cameraPos, viewDir, bgcol, sum, depth, t) { \
                 for (int i = 0; i < steps  + 1; i++) \
@@ -112,13 +125,11 @@
                     if (density > 0.01) \
                     { \
                         float diffuse = clamp((density - noiseMap(pos + 0.3 * _sunDir)) / 0.6, 0.0, 1.0);\
-                        sum = diffuse; \
+                        sum = integrate(sum, diffuse, density, bgcol, t); \
                     } \
                     t += max(0.1, 0.02 * t); \
                 } \
             } 
-
-            //integrate(sum, diffuse, density, bgcol, t);
 
             #define NOISEPROC(N, P) 1.75 * N * saturate((_MaxHeight - P.y)/_FadeDist) //spread the range of values so that we get quite transparent and quite opaque values
 
