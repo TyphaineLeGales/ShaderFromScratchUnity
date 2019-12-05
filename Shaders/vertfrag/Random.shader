@@ -1,4 +1,4 @@
-﻿Shader "Holistic/Random"
+﻿Shader "Custom/Random"
 {
     Properties
     {
