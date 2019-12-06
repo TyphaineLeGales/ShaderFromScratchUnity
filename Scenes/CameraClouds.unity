@@ -148,7 +148,7 @@ Light:
   serializedVersion: 9
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 3
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -204,13 +204,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8082105}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.30527627, y: -0.18539903, z: 0.060723107, w: -0.93206567}
   m_LocalPosition: {x: -0.16, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 36.27, y: 382.5, z: 0}
 --- !u!1 &835374013
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,7 +264,7 @@ Camera:
     height: 1
   near clip plane: 1.51
   far clip plane: 1000
-  field of view: 101.1
+  field of view: 60.7
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -290,7 +290,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 835374013}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 68.1}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -319,14 +319,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 835374013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5d50eb56905b4143a91a2a6f7d871da, type: 3}
+  m_Script: {fileID: 11500000, guid: 3905bad13b4ea44bbbf9bc4394ded67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CloudShader: {fileID: 4800000, guid: 32f9ad2d51b9b4b47ac16068f8731b71, type: 3}
-  MinHeight: -6.5
-  MaxHeight: 5
-  FadeDist: 2
-  Scale: 2.4
-  Steps: 27
+  CloudShader: {fileID: 4800000, guid: a37a54842103242a493da964a448e28f, type: 3}
+  MinHeight: -7.02
+  MaxHeight: 17.3
+  FadeDist: 6.3
+  Scale: -4.3
+  Steps: 3.53
   ValueNoiseImage: {fileID: 2800000, guid: 775531c14765f44eea266a4aebf23a99, type: 3}
   Sun: {fileID: 8082107}

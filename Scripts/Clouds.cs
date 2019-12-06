@@ -54,10 +54,10 @@ public class Clouds : MonoBehaviour
 
         _Cam.CalculateFrustumCorners(new Rect(0, 0, 1, 1), _Cam.farClipPlane, Camera.MonoOrStereoscopicEye.Mono, fCorners);
 
-        frustumCorners.SetRow(0, fCorners[1]);
-        frustumCorners.SetRow(1, fCorners[2]);
-        frustumCorners.SetRow(2, fCorners[3]);
-        frustumCorners.SetRow(3, fCorners[0]);
+        frustumCorners.SetRow(0, Vector3.Scale(fCorners[1], new Vector3(1, 1, -1)));
+        frustumCorners.SetRow(1, Vector3.Scale(fCorners[2], new Vector3(1, 1, -1)));
+        frustumCorners.SetRow(2, Vector3.Scale(fCorners[3], new Vector3(1, 1, -1)));
+        frustumCorners.SetRow(3,Vector3.Scale(fCorners[0], new Vector3(1, 1, -1)));
         return frustumCorners;
     }
 

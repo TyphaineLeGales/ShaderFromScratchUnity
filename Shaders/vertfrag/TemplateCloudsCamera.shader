@@ -1,4 +1,4 @@
-﻿Shader "Holistic/CloudsCamera"
+﻿Shader "Custom/CloudsCamera"
 {
     Properties
     {
