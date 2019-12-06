@@ -68,6 +68,7 @@
             float noise3d(float3 value)
             {
                 value *= _Scale;
+                value.x += _Time.x *5;
                 float3 interp = frac(value);
                 interp = smoothstep(0.0, 1.0, interp);
 
@@ -211,7 +212,6 @@
             {
                fixed4 col = fixed4(0,0,0,0);
                float  ct = 0; // keep track of number of steps and accumulate 
-
                 MARCH(_Steps, map1, cameraPos, viewDir, bgcol, col, depth, ct); //mapping function to perform noise value calculation
                 MARCH(_Steps, map2, cameraPos, viewDir, bgcol, col, depth*2, ct);
                 MARCH(_Steps, map3, cameraPos, viewDir, bgcol, col, depth*3, ct);
