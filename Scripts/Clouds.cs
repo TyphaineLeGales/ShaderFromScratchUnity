@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [ExecuteInEditMode]
-public class CameraShaderClouds : MonoBehaviour
+public class Clouds : MonoBehaviour
 {
     public Shader CloudShader;
     public float MinHeight = 0.0f;
@@ -16,21 +14,21 @@ public class CameraShaderClouds : MonoBehaviour
 
     Camera _Cam;
 
-    public Material Material {
-        // if there is no material create one with the cloudShader
-        get {
+    public Material Material
+    {
+        get
+        {
             if (_Material == null && CloudShader != null)
             {
                 _Material = new Material(CloudShader);
             }
 
-        //if there is no shader we don't need a material
-            if(_Material != null && CloudShader == null )
+            if (_Material != null && CloudShader == null)
             {
                 DestroyImmediate(_Material);
             }
 
-            if(_Material != null && CloudShader != null && CloudShader != _Material.shader)
+            if (_Material != null && CloudShader != null && CloudShader != _Material.shader)
             {
                 DestroyImmediate(_Material);
                 _Material = new Material(CloudShader);
@@ -45,9 +43,8 @@ public class CameraShaderClouds : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(_Material)
+        if (_Material)
             DestroyImmediate(_Material);
-        
     }
 
     Matrix4x4 GetFrustumCorners()
@@ -55,9 +52,8 @@ public class CameraShaderClouds : MonoBehaviour
         Matrix4x4 frustumCorners = Matrix4x4.identity;
         Vector3[] fCorners = new Vector3[4];
 
-        _Cam.CalculateFrustumCorners(new Rect(0,0,1,1), _Cam.farClipPlane, Camera.MonoOrStereoscopicEye.Mono, fCorners);
+        _Cam.CalculateFrustumCorners(new Rect(0, 0, 1, 1), _Cam.farClipPlane, Camera.MonoOrStereoscopicEye.Mono, fCorners);
 
-        //fCorner 0 = bottom left hand corner => if set fCorners[0] first => renders the side tilted on its side
         frustumCorners.SetRow(0, fCorners[1]);
         frustumCorners.SetRow(1, fCorners[2]);
         frustumCorners.SetRow(2, fCorners[3]);
@@ -68,19 +64,19 @@ public class CameraShaderClouds : MonoBehaviour
     [ImageEffectOpaque]
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        if(_Material == null && ValueNoiseImage == null)
+        if (Material == null || ValueNoiseImage == null)
         {
-            Graphics.Blit(source, destination); //regular rendering Blit = Bit Block Transfer => is used in cg to blend bitmaps together
+            Graphics.Blit(source, destination);
             return;
         }
 
-        if(_Cam == null)
+        if (_Cam == null)
             _Cam = GetComponent<Camera>();
-        
-        Material.SetTexture("ValueNoise", ValueNoiseImage);
-        if(Sun != null) 
+
+        Material.SetTexture("_ValueNoise", ValueNoiseImage);
+        if (Sun != null)
             Material.SetVector("_SunDir", -Sun.forward);
-        else 
+        else
             Material.SetVector("_SunDir", Vector3.up);
 
         Material.SetFloat("_MinHeight", MinHeight);
@@ -90,16 +86,15 @@ public class CameraShaderClouds : MonoBehaviour
         Material.SetFloat("_Steps", Steps);
 
         Material.SetMatrix("_FrustumCornersWS", GetFrustumCorners());
-        Material.SetMatrix("CameraInvViewMatrix", _Cam.cameraToWorldMatrix);
+        Material.SetMatrix("_CameraInvViewMatrix", _Cam.cameraToWorldMatrix);
         Material.SetVector("_CameraPosWS", _Cam.transform.position);
 
         CustomGraphicsBlit(source, destination, Material, 0);
-            
+
     }
 
-    //Unity Low Level graphics Language based on OpenGL
-    //drawing clouds onto the screen
-    static void CustomGraphicsBlit (RenderTexture source, RenderTexture dest, Material fxMaterial, int passNr) 
+    static void CustomGraphicsBlit(RenderTexture source,
+        RenderTexture dest, Material fxMaterial, int passNr)
     {
         RenderTexture.active = dest;
 
@@ -113,28 +108,25 @@ public class CameraShaderClouds : MonoBehaviour
         GL.Begin(GL.QUADS);
 
         GL.MultiTexCoord2(0, 0.0f, 0.0f);
-        GL.Vertex3(0.0f, 0.0f, 3.0f); //BOTTOM LEFT
+        GL.Vertex3(0.0f, 0.0f, 3.0f); // BL
 
         GL.MultiTexCoord2(0, 1.0f, 0.0f);
-        GL.Vertex3(1.0f, 1.0f, 2.0f); //BOTTOM RIGHT
+        GL.Vertex3(1.0f, 0.0f, 2.0f); // BR
 
         GL.MultiTexCoord2(0, 1.0f, 1.0f);
-        GL.Vertex3(1.0f, 1.0f, 1.0f); //TOP RIGHT
+        GL.Vertex3(1.0f, 1.0f, 1.0f); // TR
 
         GL.MultiTexCoord2(0, 0.0f, 1.0f);
-        GL.Vertex3(0.0f, 1.0f, 0.0f); //TOP LEFT
+        GL.Vertex3(0.0f, 1.0f, 0.0f); // TL
 
         GL.End();
         GL.PopMatrix();
-
     }
-    
-    protected virtual void OnDisable(){
-        if(_Material)
+
+    protected virtual void OnDisable()
+    {
+        if (_Material)
             DestroyImmediate(_Material);
     }
 
-
-  
 }
-
