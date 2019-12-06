@@ -98,7 +98,7 @@
 
             fixed4 integrate(fixed4 sum, float diffuse, float density, fixed4 bgcol, float t)
             {
-                fixed3 lighting = fixed3(0.65, 0.68, 0.7) * 1.3 + 0.5 * fixed3(0.7, 0.5, 0.3) * diffuse;
+                fixed3 lighting = fixed3(0.75, 0.68, 0.7) * 1.3 + 0.5 * fixed3(0.7, 0.5, 0.3) * diffuse;
                 fixed3 colrgb = lerp(fixed3(1.0, 0.95, 0.8), fixed3(0.65, 0.65, 0.65), density);
                 fixed4 col = fixed4(colrgb.r, colrgb.g, colrgb.b, density);
                 col.rgb *= lighting;
@@ -133,12 +133,31 @@
 
             #define NOISEPROC(N, P) 1.75 * N * saturate((_MaxHeight - P.y)/_FadeDist) //spread the range of values so that we get quite transparent and quite opaque values
 
+
             float map1(float3 q) //q being the position at which we are calculatin the noise
             { 
                 float3 p = q;
                 float f; //accumulation of different noise values
+                //inplement FBM
                 f = 0.5 * noise3d(q);
+                q = q*2;
+                f += 0.25 * noise3d(q);
+                q = q*3.5;
+                f += 0.15 * noise3d(q);
+
                 //return f if not using NOISERPOC;
+                return NOISEPROC(f, p);
+            }
+
+            float map2(float3 q) 
+            { 
+                float3 p = q;
+                float f;
+                f = 0.8 * noise3d(q);
+                q = q*1.5;
+                f += 0.4 * noise3d(q);
+                q = q*3.5;
+                f += 0.2 * noise3d(q);
                 return NOISEPROC(f, p);
             }
 
@@ -148,6 +167,7 @@
                float  ct = 0; // keep track of number of steps and accumulate 
 
                MARCH(_Steps, map1, cameraPos, viewDir, bgcol, col, depth, ct); //mapping function to perform noise value calculation
+               MARCH(_Steps, map2, cameraPos, viewDir, bgcol, col, depth, ct);
                 return clamp(col, 0.0, 1.0);
             
             }
